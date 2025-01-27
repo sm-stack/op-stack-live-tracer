@@ -1,4 +1,4 @@
-package simple_tracer
+package live
 
 import (
 	"encoding/json"
@@ -9,7 +9,6 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/eth/tracers"
 	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/params"
 )
 
 func init() {
@@ -22,7 +21,7 @@ type simpleTracer struct {
 	reason    error       // Textual reason for the interruption
 }
 
-func newSimpleTracer(_ *tracers.Context, _ json.RawMessage, _ *params.ChainConfig) (*tracers.Tracer, error) {
+func newSimpleTracer(_ *tracers.Context, _ json.RawMessage) (*tracers.Tracer, error) {
 	t := &simpleTracer{result: make(map[string]any)}
 	log.Info("Simple tracer initialized")
 	return &tracers.Tracer{

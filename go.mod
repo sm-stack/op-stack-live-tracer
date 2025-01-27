@@ -4,7 +4,7 @@ go 1.22.0
 
 toolchain go1.22.7
 
-require github.com/ethereum/go-ethereum v1.14.12
+require github.com/ethereum/go-ethereum v1.14.11
 
 require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
