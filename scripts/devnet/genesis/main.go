@@ -6,9 +6,6 @@ import (
 	opnode "github.com/ethereum-optimism/optimism/op-node"
 	"github.com/ethereum-optimism/optimism/op-node/chaincfg"
 	"github.com/ethereum-optimism/optimism/op-node/cmd/genesis"
-	"github.com/ethereum-optimism/optimism/op-node/cmd/interop"
-	"github.com/ethereum-optimism/optimism/op-node/cmd/networks"
-	"github.com/ethereum-optimism/optimism/op-node/cmd/p2p"
 	"github.com/ethereum-optimism/optimism/op-node/flags"
 	metrics "github.com/ethereum-optimism/optimism/op-node/metrics"
 	node "github.com/ethereum-optimism/optimism/op-node/node"
@@ -37,18 +34,9 @@ func main() {
 	app.Action = cliapp.LifecycleCmd(RollupNodeMain)
 	app.Commands = []*cli.Command{
 		{
-			Name:        "p2p",
-			Subcommands: p2p.Subcommands,
-		},
-		{
 			Name:        "genesis",
 			Subcommands: genesis.Subcommands,
 		},
-		{
-			Name:        "networks",
-			Subcommands: networks.Subcommands,
-		},
-		interop.InteropCmd,
 	}
 
 	ctx := ctxinterrupt.WithSignalWaiterMain(context.Background())
