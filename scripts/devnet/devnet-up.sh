@@ -8,6 +8,7 @@ ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 
 # Paths & Environment Variables
 ENV_PATH="${ROOT_DIR}/envs/devnet/config"
+GENESIS_DIR="${ENV_PATH}/genesis"
 GENESIS_PATH="${ENV_PATH}/genesis"
 DEVNET_CONFIG_PATH="${ENV_PATH}/devnetL1.json"
 ALLOCS_L1_PATH="${ENV_PATH}/allocs-l1.json"
@@ -28,7 +29,13 @@ RETRY_COUNT=0
 
 echo "🔧 Starting Devnet Setup..."
 
-### **L1 Genesis Setup**
+### Check for Genesis Directory
+if [ ! -d "$GENESIS_DIR" ]; then
+    echo "🔧 Creating missing genesis directory..."
+    mkdir -p "$GENESIS_DIR"
+fi
+
+### L1 Genesis Setup
 if [ -f "$GENESIS_L1_PATH" ]; then
     echo "✅ L1 genesis already generated."
 else
@@ -74,7 +81,7 @@ until curl -s http://127.0.0.1:8545 > /dev/null; do
 done
 echo "✅ L1 RPC is up."
 
-### **L2 Genesis Setup**
+### L2 Genesis Setup
 if [ -f "$GENESIS_L2_PATH" ]; then
     echo "✅ L2 genesis and rollup configs already generated."
 else
@@ -91,7 +98,7 @@ else
         --outfile.rollup "$ROLLUP_CONFIG_PATH"
 fi
 
-### **Start L2 Services**
+### Start L2 Services
 echo "🚀 Bringing up L2..."
 cd "$ROOT_DIR"
 docker compose -f "$DEVNET_COMPOSE_FILE" up -d l2 op-node op-batcher

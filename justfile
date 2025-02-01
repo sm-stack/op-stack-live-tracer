@@ -27,4 +27,4 @@ devnet-clean:
     docker compose -f {{DEV_COMPOSE_FILE}} down -v
     docker image ls '{{REPO_NAME}}*' --format='{{ '{{.Repository}}' }}' | xargs -r docker rmi
     docker volume ls --filter name='{{REPO_NAME}}*' --format='{{ '{{.Name}}' }}' | xargs -r docker volume rm
-    rm -rf envs/devnet/genesis/
+    rm -rf envs/devnet/config/genesis/
