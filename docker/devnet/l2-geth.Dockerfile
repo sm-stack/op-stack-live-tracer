@@ -8,7 +8,8 @@ RUN git clone https://github.com/ethereum-optimism/op-geth.git && \
     cd op-geth && \
     git checkout v1.101411.4
 
-COPY tracers/simple-tracer/simple.go /app/op-geth/eth/tracers/live/simple.go
+COPY tracers/bundler/bundler.go /app/op-geth/eth/tracers/live/bundler.go
+COPY tracers/bundler/ethapi/api_account_abstraction.go /app/op-geth/internal/ethapi/api_account_abstraction.go
 
 # Build op-geth
 RUN cd op-geth && go run build/ci.go install -static ./cmd/geth

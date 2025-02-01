@@ -80,6 +80,7 @@ services:
       - "/entrypoint.sh"
     environment:
       GETH_MINER_RECOMMIT: 100ms
+      TRACER_NAME: ${TRACER_NAME}
 
   op-node:
     depends_on:
