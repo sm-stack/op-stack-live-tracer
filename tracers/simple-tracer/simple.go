@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	tracers.DefaultDirectory.Register("simpleTracer", newSimpleTracer, false)
+	tracers.LiveDirectory.Register("simple", newSimpleTracer)
 }
 
 type simpleTracer struct {
@@ -21,20 +21,17 @@ type simpleTracer struct {
 	reason    error       // Textual reason for the interruption
 }
 
-func newSimpleTracer(_ *tracers.Context, _ json.RawMessage) (*tracers.Tracer, error) {
+func newSimpleTracer(_ json.RawMessage) (*tracing.Hooks, error) {
 	t := &simpleTracer{result: make(map[string]any)}
 	log.Info("Simple tracer initialized")
-	return &tracers.Tracer{
-		Hooks: &tracing.Hooks{
-			OnTxStart: t.OnTxStart,
-		},
-		GetResult: t.GetResult,
-		Stop:      t.Stop,
+	return &tracing.Hooks{
+		OnTxStart: t.OnTxStart,
 	}, nil
 }
 
 func (t *simpleTracer) OnTxStart(env *tracing.VMContext, tx *types.Transaction, from common.Address) {
 	t.result["from"] = from
+	log.Info("Simple tracer OnTxStart", "from", from)
 }
 
 func (t *simpleTracer) GetResult() (json.RawMessage, error) {
