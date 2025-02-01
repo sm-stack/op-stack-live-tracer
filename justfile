@@ -12,7 +12,7 @@ default:
 
 # Bring up the devnet
 devnet-up:
-    docker compose -f {{DEV_COMPOSE_FILE}} up -d
+    sh scripts/devnet/devnet-up.sh
 
 # Shut down all services
 devnet-down:
@@ -27,3 +27,4 @@ devnet-clean:
     docker compose -f {{DEV_COMPOSE_FILE}} down -v
     docker image ls '{{REPO_NAME}}*' --format='{{ '{{.Repository}}' }}' | xargs -r docker rmi
     docker volume ls --filter name='{{REPO_NAME}}*' --format='{{ '{{.Name}}' }}' | xargs -r docker volume rm
+    rm -rf envs/devnet/genesis/

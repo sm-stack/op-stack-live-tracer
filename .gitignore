@@ -3,3 +3,4 @@
 
 # environment
 .env
+envs/devnet/config/genesis/
